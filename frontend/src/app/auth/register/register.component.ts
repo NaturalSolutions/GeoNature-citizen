@@ -52,12 +52,6 @@ export class RegisterComponent {
             this.user.organism = null;
             this.user.function = null;
         }
-        if (
-            this.user.category !== 'professional' &&
-            this.user.category !== 'education'
-        ) {
-            this.user.is_relay = false;
-        }
     }
 
     onRegister(): void {

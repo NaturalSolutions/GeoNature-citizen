@@ -109,6 +109,7 @@ def registration():
 
         # Protection against admin creation from API
         datas_to_save["admin"] = False
+        datas_to_save["is_relay"] = False
         if "extention" in request_datas and "avatar" in request_datas:
             extention = request_datas["extention"]
             imgdata = base64.b64decode(

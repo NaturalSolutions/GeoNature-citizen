@@ -243,26 +243,7 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="col-sm-12" *ngIf="user.category === 'professional' || user.category === 'education'">
-                <div class="form-group">
-                    <input
-                        type="checkbox"
-                        id="is_relay"
-                        name="is_relay"
-                        #is_relay="ngModel"
-                        [(ngModel)]="user.is_relay"
-                        i18n="I am a relay@@iAmARelay"
-                    />
-                    <label
-                        for="is_relay"
-                        i18n="I am a relay@@iAmARelayLabel"
-                        class="checkbox-label"
-                    >
-                        Je suis un relais
-                    </label>
-                </div>
-            </div>
-            <div *ngIf="!user.is_relay" class="col-md-6 col-sm-12">
+            <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label for="linked_relay" i18n="Your postal code@@yourPostalCodeLabel">Relais auquel je suis lié</label>
                     <div class="input-group">
@@ -278,7 +259,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="!user.is_relay" class="col-md-6 col-sm-12">
+            <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label for="made_known_relay" i18n="Your postal code@@yourPostalCodeLabel">
                         Relais qui m'a fait connaitre ce site
