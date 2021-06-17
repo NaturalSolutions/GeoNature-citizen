@@ -30,6 +30,11 @@ export interface Relay {
     name: string;
 }
 
+export interface Organism {
+    id_organism: number;
+    name: string;
+}
+
 export interface LoginUser {
     email: string;
     password: string;

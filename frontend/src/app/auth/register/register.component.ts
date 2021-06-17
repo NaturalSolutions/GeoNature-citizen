@@ -5,7 +5,7 @@ import { debounceTime, catchError, map } from 'rxjs/operators';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { RegisterUser, Relay } from '../models';
+import { RegisterUser, Relay, Organism } from '../models';
 import { AuthService } from './../auth.service';
 import { AppConfig } from '../../../conf/app.config';
 import { UserService } from '../user-dashboard/user.service.service';
@@ -24,6 +24,7 @@ export class RegisterComponent {
     errorMessage: string;
     successMessage: string;
     relaysList: Array<Relay>;
+    organismsList: Array<Organism>;
     userAvatar: string | ArrayBuffer;
     categoriesEnum = Object.freeze({
         individual: 'Particulier',
@@ -45,6 +46,9 @@ export class RegisterComponent {
         this.userService
             .getRelays()
             .subscribe((relayList) => (this.relaysList = relayList));
+        this.userService
+            .getOrganisms()
+            .subscribe((organismsList) => (this.organismsList = organismsList));
     }
 
     onChangeCategory(): void {

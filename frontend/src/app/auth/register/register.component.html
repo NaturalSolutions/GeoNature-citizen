@@ -165,18 +165,16 @@
                 <div class="form-group">
                     <label for="organism" i18n="Your organism@@yourOrganismLabel">Votre organisme</label>
                     <div class="input-group">
-                        <input
-                            type="text"
+                        <select
                             id="organism"
                             name="organism"
                             class="form-control rounded-0"
-                            i18n-placeholder="Enter your organism"
-                            placeholder="Entrez votre organisme"
                             [(ngModel)]="user.organism"
                             #organism="ngModel"
-                            autocomplete="organism"
                             [required]="user.category !== 'individual'"
-                        />
+                        >
+                            <option *ngFor="let organism of organismsList" [ngValue]="organism.id_organism">{{organism.name}}</option>
+                        </select>
                     </div>
                 </div>
             </div>
