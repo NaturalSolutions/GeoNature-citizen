@@ -184,6 +184,15 @@ class UserGroupsModel(TimestampMixinModel, db.Model):
     )
 
 
+class OrganismModel(db.Model):
+    """Table des organismes"""
+
+    __tablename__ = "t_organisms"
+    __table_args__ = {"schema": "gnc_core"}
+    id_organism = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(250))
+
+
 class ObserverMixinModel(object):
     @declared_attr
     def id_role(cls):

@@ -17,7 +17,7 @@ from gncitizen.utils.env import MEDIA_DIR
 from gncitizen.utils.sqlalchemy import json_resp
 from server import db, jwt
 from gncitizen.core.observations.models import ObservationModel
-from .models import UserModel, RevokedTokenModel
+from .models import UserModel, OrganismModel, RevokedTokenModel
 from gncitizen.utils.jwt import admin_required
 import uuid
 import smtplib
@@ -351,6 +351,27 @@ def get_relays():
         description: list all relays
     """
     return UserModel.return_relays(), 200
+
+
+@routes.route("/organisms", methods=["GET"])
+@json_resp
+def get_organisms():
+    """list all organisms
+    ---
+    tags:
+      - Organisms
+    summary: List all organisms
+    produces:
+      - application/json
+    responses:
+      200:
+        description: list all organisms
+    """
+
+    organisms = OrganismModel.query.all()
+
+
+    return [{"id_organism": p.id_organism, "name": p.name} for p in organisms], 200
 
 
 @routes.route("/user/info", methods=["GET", "PATCH"])
