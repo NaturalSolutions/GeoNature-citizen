@@ -28,7 +28,7 @@ import json
 from flask_admin.contrib.sqla.view import ModelView
 from jinja2 import Markup
 
-from gncitizen.core.users.models import UserModel
+from gncitizen.core.users.models import UserModel, OrganismModel
 from gncitizen.core.sites.models import CorProgramSiteTypeModel
 from gncitizen.utils.env import admin, MEDIA_DIR
 from gncitizen.utils.errors import GeonatureApiError
@@ -113,7 +113,6 @@ class CustomFormView(ModelView):
 class UserView(ModelView):
     column_exclude_list = ["password"]
     form_excluded_columns = ["timestamp_create", "timestamp_update", "password"]
-
 
 def get_geom_file_path(obj, file_data):
     return "geometries/{}".format(file_data.filename)

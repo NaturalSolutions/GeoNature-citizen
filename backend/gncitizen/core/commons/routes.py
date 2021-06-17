@@ -26,7 +26,7 @@ from .models import (
     CustomFormModel,
     GeometryModel,
 )
-from gncitizen.core.users.models import UserModel
+from gncitizen.core.users.models import UserModel, OrganismModel
 from gncitizen.core.observations.models import ObservationModel
 from gncitizen.core.sites.models import VisitModel, SiteModel
 
@@ -52,6 +52,7 @@ routes = Blueprint("commons", __name__)
 
 
 admin.add_view(UserView(UserModel, db.session, "Utilisateurs"))
+admin.add_view(ModelView(OrganismModel, db.session, "Organismes"))
 admin.add_view(ProjectView(ProjectModel, db.session, "1 - Projets", category="Enquêtes"))
 admin.add_view(GeometryView(GeometryModel, db.session, "2 - Zones geographiques", category="Enquêtes"))
 admin.add_view(CustomFormView(CustomFormModel, db.session, "3a - Formulaires dynamiques", category="Enquêtes"))
