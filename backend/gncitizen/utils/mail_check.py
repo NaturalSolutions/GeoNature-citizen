@@ -48,10 +48,11 @@ def send_user_email(
         server.ehlo()
         if current_app.config["MAIL"]["MAIL_STARTTLS"]:
             server.starttls()
-        server.login(
-            str(current_app.config["MAIL"]["MAIL_AUTH_LOGIN"]),
-            str(current_app.config["MAIL"]["MAIL_AUTH_PASSWD"]),
-        )
+        if current_app.config["MAIL"]["MAIL_AUTH_LOGIN"]:
+            server.login(
+                str(current_app.config["MAIL"]["MAIL_AUTH_LOGIN"]),
+                str(current_app.config["MAIL"]["MAIL_AUTH_PASSWD"]),
+            )
         server.sendmail(
             from_addr,
             to,
