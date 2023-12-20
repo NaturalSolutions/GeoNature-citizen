@@ -86,11 +86,9 @@ class CustomFormView(ModelView):
 
 
 class UserView(ModelView):
-    column_exclude_list = ["password"]
     form_excluded_columns = [
         "timestamp_create",
         "timestamp_update",
-        "password",
     ]
 
 
