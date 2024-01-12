@@ -11,7 +11,7 @@ DIR=$(pwd)
 . config/settings.ini
 
 #Installation de python / gunicorn / supervisor + dépendances
-sudo apt update
+#sudo apt update
 sudo apt -y install gcc curl gunicorn python-setuptools lsb-release \
   apt-transport-https wget build-essential zlib1g-dev libncurses5-dev \
   libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev curl \

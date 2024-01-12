@@ -3,7 +3,12 @@
     <a [routerLink]="[ '/home']">Accueil</a> | <a href="https://github.com/PnX-SI/GeoNature-citizen">GeoNature-citizen</a> | <a [routerLink]="[ '/about']" >A propos</a> 
   </div>
 
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br>
-    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+  <p>Agence régionale de la biodiversité en Île-de-France (ARB îdF).</p>
+  <p>Département Biodiversité de l'Institut Paris Region<br>
+15 rue Falguière 75015 PARIS<br>
+Tél. + 33 1 77 49 76 03<br>
+contact.arb@institutparisregion.fr
+  </p>
+  <p> </p>
 
 </footer>
