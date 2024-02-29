@@ -85,9 +85,10 @@ export class GncProgramsService implements OnInit {
                             this.domSanitizer.bypassSecurityTrustHtml(
                                 program.short_desc
                             );
-                        // program.html_long_desc = this.domSanitizer.bypassSecurityTrustHtml(
-                        //     program.long_desc
-                        // );
+                        program.html_long_desc =
+                            this.domSanitizer.bypassSecurityTrustHtml(
+                                program.long_desc
+                            );
                         return program;
                     })
                 ),
