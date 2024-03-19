@@ -1,4 +1,9 @@
-import { Component, AfterViewInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import {
+    Component,
+    AfterViewInit,
+    ViewEncapsulation,
+    ViewChild,
+} from '@angular/core';
 import { GncProgramsService } from '../../../api/gnc-programs.service';
 import { ActivatedRoute } from '@angular/router';
 import * as L from 'leaflet';
@@ -45,12 +50,12 @@ export class SiteDetailComponent
         });
         this.module = 'sites';
         this.username = localStorage.getItem('username');
-        this.flowService.modalCloseStatus.subscribe( value => {
+        this.flowService.modalCloseStatus.subscribe((value) => {
             if (value === 'visitPosted') {
                 this.updateData();
             }
         });
-        this.siteService.siteEdited.subscribe(value => {
+        this.siteService.siteEdited.subscribe((value) => {
             this.updateData();
         });
     }
@@ -77,7 +82,7 @@ export class SiteDetailComponent
                 MainConfig.API_ENDPOINT + this.photos[i]['url'];
         });
         // data
-        this.attributes = []
+        this.attributes = [];
         if (this.site.properties.visits) {
             this.site.properties.visits.forEach((e) => {
                 const data = e.json_data;
@@ -85,18 +90,11 @@ export class SiteDetailComponent
                     date: e.date,
                     author: e.author,
                     id: e.id_visit,
-                    json_data: e.json_data
+                    json_data: e.json_data,
                 };
                 this.loadJsonSchema().subscribe((jsonschema: any) => {
                     const schema = jsonschema.schema.properties;
-                    const custom_data = [];
-                    for (const k in data) {
-                        const v = data[k];
-                        custom_data.push({
-                            name: schema[k].title,
-                            value: v.toString(),
-                        });
-                    }
+                    const custom_data = this.formatData(data, schema);
                     if (custom_data.length > 0) {
                         visitData['data'] = custom_data;
                     }
@@ -134,7 +132,9 @@ export class SiteDetailComponent
     }
 
     editSiteVisit(visit_data) {
-        visit_data.photos = this.photos.filter((p) => p.visit_id === visit_data.id)
+        visit_data.photos = this.photos.filter(
+            (p) => p.visit_id === visit_data.id
+        );
         this.flowService.editSiteVisit(this.site_id, visit_data.id, visit_data);
     }
 
@@ -154,5 +154,66 @@ export class SiteDetailComponent
         this.userService.deleteSiteVisit(idVisitToDelete).subscribe(() => {
             this.updateData();
         });
+    }
+
+    formatData(data: any, schema: any): any[] {
+        const formattedData: any[] = [];
+        this.flattenObject(data, schema, formattedData);
+        return formattedData;
+    }
+
+    flattenObject(obj: any, schema: any, formattedData: any[]): void {
+        for (const key in obj) {
+            if (!obj.hasOwnProperty(key)) continue;
+
+            const value = obj[key];
+            const propSchema = schema[key];
+
+            if (Array.isArray(value)) {
+                const isArrayType = propSchema.type == 'array';
+                const listFormattedString = [];
+                value.forEach((item: any, index) => {
+                    const schema_nested = propSchema.items.properties;
+                    const formattedStrings = this.formatArrayItem(
+                        item,
+                        schema_nested
+                    );
+                    listFormattedString.push(formattedStrings);
+                });
+                formattedData.push({
+                    name: propSchema.title,
+                    value: listFormattedString,
+                    showDetails: isArrayType,
+                    type: propSchema.type,
+                });
+            } else if (typeof value === 'object') {
+                this.flattenObject(
+                    value,
+                    propSchema.items.properties,
+                    formattedData
+                );
+            } else {
+                const propName = propSchema.title;
+                const isArrayType = propSchema.type == 'array';
+                formattedData.push({
+                    name: propName,
+                    value: value.toString(),
+                    showDetails: isArrayType,
+                    type: propSchema.type,
+                });
+            }
+        }
+    }
+
+    formatArrayItem(item: any, schema: any): string {
+        let formattedString = '';
+        for (const k in item) {
+            const nestedValue = item[k];
+            const nestedSchema = schema[k];
+            formattedString += `<p>${
+                nestedSchema.title
+            }: ${nestedValue.toString()}</p>`;
+        }
+        return formattedString;
     }
 }
